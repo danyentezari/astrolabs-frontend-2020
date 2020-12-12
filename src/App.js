@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 
-
 function NavBar() {
   return (
     <nav className="navbar navbar-dark bg-dark">
@@ -19,19 +18,24 @@ function NavBar() {
   )
 }
 
-function Button() {
+
+function Button(prop) {
   return(
-    <button type="button" className="btn btn-success">Success</button>
+  <button type="button" className="btn btn-primary">{prop.children}</button>
   )
 }
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <Button />
+  
+      <Button>Save</Button>
+  
     </div>
   );
 }
+
+
+
 
 export default App;
