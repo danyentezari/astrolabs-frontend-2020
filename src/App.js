@@ -18,10 +18,22 @@ function NavBar(props) {
   )
 }
 
-
 function Button(props) {
   return(
   <button type="button" className={props.className}>{props.children}</button>
+  )
+}
+
+function Jumbotron(props) {
+  return(
+    <div className="jumbotron">
+      <h1 className="display-4">{props.title}</h1>
+      <p className="lead">{props.lead}</p>
+      <hr className="my-4" />
+      <p>{props.description}</p>
+      <a className="btn btn-primary btn-lg" 
+      href="#" role="button">{props.buttonLabel}</a>
+    </div>
   )
 }
 
@@ -42,6 +54,13 @@ function App() {
         <Button className="btn btn-primary">About</Button>
         <Button className="btn btn-primary">Contact</Button>
       </NavBar>
+
+      <Jumbotron 
+        title="Welcome to the App"
+        lead="This is our new app!"
+        description="In this app you are able to do this and that"
+        buttonLabel="Learn More"
+      />
 
       <NavBar className="fixed-bottom"/>
 
