@@ -1,41 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 
-function NavBar(props) {
-  return (
-    <nav className={`navbar navbar-dark bg-dark ${props.className}`}>
-      <div className="container-fluid">
+import NavBar from './NavBar';
+import Button from './Button';
+import Jumbotron from './Jumbtotron';
 
-        <a className="navbar-brand">Navbar</a>
-
-        <div className="d-flex flex-grow-1">
-          {props.children}
-        </div>
-        
-        {props.extraComponent}
-      </div>
-    </nav>
-  )
-}
-
-function Button(props) {
-  return(
-  <button type="button" className={props.className}>{props.children}</button>
-  )
-}
-
-function Jumbotron(props) {
-  return(
-    <div className="jumbotron">
-      <h1 className="display-4">{props.title}</h1>
-      <p className="lead">{props.lead}</p>
-      <hr className="my-4" />
-      <p>{props.description}</p>
-      <a className="btn btn-primary btn-lg" 
-      href="#" role="button">{props.buttonLabel}</a>
-    </div>
-  )
-}
 
 function App() {
   return (
