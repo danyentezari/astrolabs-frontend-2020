@@ -4,6 +4,7 @@ import './App.css';
 import LayoutRoute from './LayoutRoute';
 import HomeScreen from './HomeScreen';
 import AboutScreen from './AboutScreen';
+import RegistrationScreen from './RegistrationScreen';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
         <Switch>
             <LayoutRoute path="/" exact={true} component={HomeScreen} />
             <LayoutRoute path="/about" exact={true} component={AboutScreen} />
+            <LayoutRoute to="/register" exact={true} component={RegistrationScreen} />
         </Switch>
     </BrowserRouter>
   )

@@ -5,7 +5,7 @@ import NavBar from './NavBar';
 const LayoutRoute = (props) => {
     return (
 
-        <div>
+        <React.Fragment>
             <NavBar extraComponent={
                 <div className="d-flex">
                     <input className="form-control me-2" type="search" 
@@ -25,7 +25,7 @@ const LayoutRoute = (props) => {
 
             <NavBar/>
 
-        </div>
+        </React.Fragment>
     )
 }
 
