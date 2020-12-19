@@ -1,10 +1,11 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import NavBar from './NavBar';
 import Button from './Button';
-import Jumbotron from './Jumbtotron';
-
+import Card from './Card';
+import Jumbotron from './Jumbotron';
+import NavBar from './NavBar';
 
 function App() {
   return (
@@ -31,8 +32,37 @@ function App() {
         buttonLabel="Learn More"
       />
 
-      <NavBar className="fixed-bottom"/>
+      <div className="container pb-5 d-flex justify-content-between">
 
+        <Card 
+            imgSrc="https://images.unsplash.com/photo-1530319067432-f2a729c03db5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&h=300&w=500"
+            imgAlt="iPhone"
+            title="iPhone 11"
+            text="the best price for iPhone 11"
+            buttonLabel="read more"
+            link="#"
+        />
+
+        <Card 
+            imgSrc="https://images.unsplash.com/photo-1581993192008-63e896f4f744?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&h=300&w=500"
+            imgAlt="Samsung Galaxy Z Flip"
+            title="Samsung Galaxy Z Flip"
+            text="this phone is not broken it looks by design"
+            buttonLabel="read more"
+            link="#"
+        />
+
+        <Card 
+            imgSrc="https://images.unsplash.com/photo-1544228865-7d73678c0f28?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTl8fGlwaG9uZXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&h=300&w=500"
+            imgAlt="iPhone"
+            title="iPhone 11"
+            text="the best price for iPhone 11"
+            buttonLabel="read more"
+            link="#"
+        />
+
+      </div>
+      <NavBar/>
     </div>
   );
 }
