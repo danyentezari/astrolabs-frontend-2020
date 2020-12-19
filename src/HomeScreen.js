@@ -3,6 +3,7 @@ import Button from './Button';
 import Card from './Card';
 import Jumbotron from './Jumbotron';
 
+
 const cards = [
   {
     imgSrc: "https://images.unsplash.com/photo-1530319067432-f2a729c03db5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&h=300&w=500",
@@ -30,6 +31,10 @@ const cards = [
   },
 ]
 
+// useEffect
+  // fetch
+    // setState
+      // set cards to json
 
 function HomeScreen() {
   return (

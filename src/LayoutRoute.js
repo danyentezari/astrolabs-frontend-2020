@@ -7,17 +7,11 @@ const LayoutRoute = (props) => {
 
         <React.Fragment>
             <NavBar extraComponent={
-                <div className="d-flex">
-                    <input className="form-control me-2" type="search" 
-                    placeholder="Search" aria-label="Search" />
-    
-                    <button className="btn btn-outline-success" 
-                    type="submit">Search</button>
-                </div>
+                <Link to="/register" className="btn btn-dark">Register</Link>
             }>
-            <Link to="/" className="btn btn-primary">Home</Link>
-            <Link to="/about" className="btn btn-primary">About</Link>
-            <Link to="#" className="btn btn-primary">Contact</Link>
+            <Link to="/" className="btn btn-dark">Home</Link>
+            <Link to="/about" className="btn btn-dark">About</Link>
+            <Link to="#" className="btn btn-dark">Contact</Link>
             </NavBar>
 
             <Route path={props.path} exact={props.exact} component={props.component}
