@@ -43,7 +43,7 @@ const RegistrationScreen = () => {
             setState(
                 {
                     showErrors: true,
-                    errors: errors.join(" ")
+                    errors: errors
                 }
             )
         } else {
@@ -69,7 +69,16 @@ const RegistrationScreen = () => {
         {
             state.showErrors === true && 
             <div className="error-messages alert alert-danger">
-                { state.errors }
+                <ol>
+                { 
+                    state.errors.map(
+                        (error) =>
+                            <li>
+                                {error}
+                            </li>
+                    ) 
+                }
+                </ol>
             </div>
         }
 
