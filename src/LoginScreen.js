@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AppContext from './AppContext';
 
 const LoginScreen = () => {
 
-
+    const [globalState, setGlobalState] = useContext(AppContext);
     const [ state, setState ] = useState(
         {
             showErrors: false,
@@ -29,10 +30,9 @@ const LoginScreen = () => {
         if(errors.length > 0) {
             setState(
                 {
-                    loading: false,
+                    ...state,
                     showErrors: true,
                     errors: errors,
-                    loginSuccess: false
                 }
             )
         } 
@@ -40,10 +40,10 @@ const LoginScreen = () => {
         else {
             setState(
                 {
+                    ...state,
                     loading: true,
                     showErrors: false,
                     errors: null,
-                    loginSuccess: false
                 }
             );
 
@@ -73,15 +73,32 @@ const LoginScreen = () => {
             // Then, we can read the json from backend
             .then(
                 (json) => {
-                    setState(
-                        {
-                            loading: false,
-                            showErrors: false,
-                            errors: null,
-                            loginSuccess: true
-                        }
-                    );
-                    localStorage.setItem('jwt', json.theToken);
+                    
+                    if(json.theToken) {
+                        setState(
+                            {
+                                ...state,
+                                loading: false,
+                                loginSuccess: true
+                            }
+                        );
+                        setGlobalState(
+                            {
+                                ...globalState,
+                                loggedIn: true
+                            }
+                        )
+                        localStorage.setItem('jwt', json.theToken);
+                    }
+                    else {
+                        setState(
+                            {
+                                ...state,
+                                loading: false,
+                            }
+                        );
+                        alert("Login not successful");
+                    }
                 }
             )
             // If promise did not resolve
