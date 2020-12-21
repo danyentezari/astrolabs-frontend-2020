@@ -7,7 +7,10 @@ const LayoutRoute = (props) => {
 
         <React.Fragment>
             <NavBar extraComponent={
-                <Link to="/register" className="btn btn-dark">Register</Link>
+                <React.Fragment>
+                    <Link to="/login" className="btn btn-dark">Login</Link>
+                    <Link to="/register" className="btn btn-dark">Register</Link>
+                </React.Fragment>
             }>
                 <Link to="/" className="btn btn-dark">Home</Link>
                 <Link to="/about" className="btn btn-dark">About</Link>

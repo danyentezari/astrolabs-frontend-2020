@@ -136,7 +136,7 @@ const RegistrationScreen = () => {
                     maxWidth: "40em"
                 }
             }>
-            <h1>Register your Interest</h1>
+            <h1>Register</h1>
             <br/>
 
             {
@@ -207,7 +207,7 @@ const RegistrationScreen = () => {
                             fontSize: "16px"
                         }
                     }>
-                        Register your Interest
+                        Register
                 </button>
             }
 
