@@ -7,6 +7,16 @@ const LayoutRoute = (props) => {
 
     const [globalState, setGlobalState] = useContext(AppContext);
 
+    const handleLogOut = () => {
+        localStorage.removeItem('jwt');
+        setGlobalState(
+            {
+                ...globalState,
+                loggedIn: false
+            }
+        )
+    }
+
     return (
 
         <React.Fragment>
@@ -14,7 +24,8 @@ const LayoutRoute = (props) => {
 
                 globalState.loggedIn ?
                 <React.Fragment>
-                    <Link to="/logout" className="btn btn-dark">Logout</Link>
+                    <button onClick={handleLogOut} 
+                    className="btn btn-dark">Logout</button>
                 </React.Fragment> :
 
                 <React.Fragment>
