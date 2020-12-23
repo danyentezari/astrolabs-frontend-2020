@@ -10,6 +10,9 @@ const RegistrationScreen = () => {
             registeredSuccess: false
         }
     )
+    
+    const formData = new FormData();
+    
     // Undefined only before return
     let firstNameField;
     let lastNameField;
@@ -17,6 +20,18 @@ const RegistrationScreen = () => {
     let passwordField;
     let phoneField;
     let tcsCheckBox;
+
+    const attachFile = (event) => {
+        // 1. create an array for file
+        const files = Array.from(event.target.files)
+
+        // 2. for every attachment, append file to formData
+        files.forEach(
+            (file, index) => {
+                formData.append(index, file)
+            }
+        )
+    }
 
     const registerUser = () => {
         const errors = [];
@@ -66,22 +81,20 @@ const RegistrationScreen = () => {
             // Capture all of user's response
             // 1. Create an object called formData
             // 2. For every field, add index and value to formData
-            const formData = {
-                firstName: firstNameField.value,
-                lastName: lastNameField.value,
-                email: emailField.value,
-                password: passwordField.value,
-                phone: phoneField.value
-            };
+            formData.append('firstName', firstNameField.value);
+            formData.append('lastName', lastNameField.value)
+            formData.append('email', emailField.value)
+            formData.append('password', passwordField.value)
+            formData.append('phone', phoneField.value)
 
             // 4. Send to backend
             fetch(
                 'http://localhost:3001/users/register',
                 {
                     method: 'POST',
-                    body: JSON.stringify(formData),
+                    body: formData,
                     headers: {
-                        "Content-Type": "application/json"
+                        //"Content-Type": "application/json"
                     }
                 }
             )
@@ -184,7 +197,9 @@ const RegistrationScreen = () => {
             <br/><br/>
 
             <label>Upload your profile picture</label>
-            <input className="field form-control" id="photo" name="file" 
+            <input 
+            onChange={attachFile}
+            className="field form-control" id="photo" name="file" 
             type="file" multiple="multiple"/>
 
             <br/><br/>
