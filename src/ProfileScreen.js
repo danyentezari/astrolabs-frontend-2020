@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AppContext from './AppContext';
 
 const ProfileScreen = () => {
 
+    const [ globalState, setGlobalState ] = useContext(AppContext);
 
     const [ state, setState ] = useState(
         {
@@ -170,16 +172,19 @@ const ProfileScreen = () => {
 
             <label>Enter your firstname *</label>
             <input 
+            defaultValue={globalState.profile && globalState.profile.firstName}
             ref={(elem) => firstNameField = elem}
             className="field form-control" name="firstName" type="text" />
 
             <label>Enter your lastname *</label>
             <input 
+            defaultValue={globalState.profile && globalState.profile.lastName}
             ref={(elem) => lastNameField = elem}
             className="field form-control" name="lastName" type="text" />
 
             <label>Enter your email *</label>
             <input 
+            defaultValue={globalState.profile && globalState.profile.email}
             ref={(elem) => emailField = elem}
             className="field form-control" name="email" type="text" />
 
@@ -191,6 +196,7 @@ const ProfileScreen = () => {
 
             <label>Enter your phone (optional)</label>
             <input 
+            defaultValue={globalState.profile && globalState.profile.phone}
             ref={(elem) => phoneField = elem}
             className="field form-control" name="phone" type="text" />
 

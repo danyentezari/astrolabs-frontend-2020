@@ -15,16 +15,47 @@ const App = () => {
 
   const [globalState, setGlobalState] = useState(
     {
-      loggedIn: localStorage.getItem('jwt') ? true : false
+      loggedIn: localStorage.getItem('jwt') ? true : false,
+      profile: null
     }
   )
 
-  // useEffect(
-  //   () => {
-  //     alert("loggedIn status changed!")
-  //   },
-  //   [ globalState.loggedIn ]
-  // )
+
+  useEffect(
+    () => {
+      // if there is a token and globalState.profile is null
+      if( localStorage.getItem('jwt') && globalState.profile === null) {
+        // fetch GET to get profile details
+        fetch(
+          'http://localhost:3001/users/profile',
+          {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+            }
+          }
+        )
+        .then(
+          (backendResponse) => backendResponse.json()
+        )
+        .then(
+          (json) => {
+            console.log('user\'s profile', json)
+            // update the globalState.profile
+            setGlobalState(
+              {
+                ...globalState,
+                profile: json
+              }
+            )
+          }
+        ).catch(
+          error => console.log(error)
+        )
+      }
+    },
+    [ globalState.loggedIn ]
+  )
 
   return (
     <AppContext.Provider value={[globalState, setGlobalState]}>
