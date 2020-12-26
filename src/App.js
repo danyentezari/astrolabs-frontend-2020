@@ -4,10 +4,12 @@ import './App.css';
 
 import AppContext from './AppContext';
 import LayoutRoute from './LayoutRoute';
+import PrivateRoute from './PrivateRoute';
 import HomeScreen from './HomeScreen';
 import AboutScreen from './AboutScreen';
 import RegistrationScreen from './RegistrationScreen';
 import LoginScreen from './LoginScreen';
+import ProfileScreen from './ProfileScreen';
 
 const App = () => {
 
@@ -32,6 +34,7 @@ const App = () => {
               <LayoutRoute path="/about" exact={true} component={AboutScreen} />
               <LayoutRoute path="/register" exact={true} component={RegistrationScreen} />
               <LayoutRoute path="/login" exact={true} component={LoginScreen} />
+              <PrivateRoute path="/profile" exact={true} component={ProfileScreen} />
           </Switch>
       </BrowserRouter>
     </AppContext.Provider>

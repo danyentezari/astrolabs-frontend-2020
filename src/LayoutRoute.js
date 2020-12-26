@@ -24,6 +24,7 @@ const LayoutRoute = (props) => {
 
                 globalState.loggedIn ?
                 <React.Fragment>
+                    <Link to="/profile" className="btn btn-dark">Profile</Link>
                     <button onClick={handleLogOut} 
                     className="btn btn-dark">Logout</button>
                 </React.Fragment> :
