@@ -9,7 +9,7 @@ const ProfileScreen = () => {
         {
             showErrors: false,
             loading: false,
-            registeredSuccess: false
+            updateSuccess: false
         }
     )
     
@@ -22,6 +22,7 @@ const ProfileScreen = () => {
     let passwordField;
     let phoneField;
     let tcsCheckBox;
+    let photoURLField;
 
     const attachFile = (event) => {
         // 1. create an array for file
@@ -35,7 +36,7 @@ const ProfileScreen = () => {
         )
     }
 
-    const registerUser = () => {
+    const updateUser = () => {
         const errors = [];
         // Validate the user's input
         if(firstNameField.value.length === 0) {
@@ -50,13 +51,9 @@ const ProfileScreen = () => {
             errors.push("Please enter your email!");
         }
 
-        if(passwordField.value.length === 0) {
-            errors.push("Please enter your password!");
-        }
-
-        if(tcsCheckBox.checked === false) {
-            errors.push("You need to accept terms & conditions.");
-        }
+        // if(passwordField.value.length === 0) {
+        //     errors.push("Please enter your password!");
+        // }
 
         // If there are errors
         if(errors.length > 0) {
@@ -65,7 +62,7 @@ const ProfileScreen = () => {
                     loading: false,
                     showErrors: true,
                     errors: errors,
-                    registeredSuccess: false
+                    updateSuccess: false
                 }
             )
         } 
@@ -73,10 +70,8 @@ const ProfileScreen = () => {
         else {
             setState(
                 {
+                    ...state,
                     loading: true,
-                    showErrors: false,
-                    errors: null,
-                    registeredSuccess: false
                 }
             );
 
@@ -88,14 +83,16 @@ const ProfileScreen = () => {
             formData.append('email', emailField.value)
             formData.append('password', passwordField.value)
             formData.append('phone', phoneField.value)
+            formData.append('photoURL', photoURLField.value)
 
             // 4. Send to backend
             fetch(
-                'http://localhost:3001/users/register',
+                'http://localhost:3001/users/update',
                 {
-                    method: 'POST',
+                    method: 'PUT',
                     body: formData,
                     headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
                         //"Content-Type": "application/json"
                     }
                 }
@@ -113,7 +110,7 @@ const ProfileScreen = () => {
                             loading: false,
                             showErrors: false,
                             errors: null,
-                            registeredSuccess: true
+                            updateSuccess: true
                         }
                     );
                 }
@@ -128,111 +125,123 @@ const ProfileScreen = () => {
         }
     }
 
-    if( state.registeredSuccess === true ) {
-        return(
-            <div className="App">
-                <div 
-                style={{maxWidth: 600}}
-                className="container mt-5 mb-5">
-                    <div className="alert alert-success">
-                        Account registered succesfully!
-                    </div>
+    return (
+        <div className="container mt-5 mb-5" 
+        style={
+            {
+                maxWidth: "40em"
+            }
+        }>
+        <h1>Profile Settings</h1>
+        <br/>
 
-                    <button className="btn btn-primary">Login</button>
-                </div>
-            </div>
-        )
-    }
-    else {
-        return (
-            <div className="container mt-5 mb-5" 
-            style={
-                {
-                    maxWidth: "40em"
+        {
+            state.showErrors === true && 
+            <div className="error-messages alert alert-danger">
+                <ol>
+                { 
+                    state.errors.map(
+                        (error) =>
+                            <li>
+                                {error}
+                            </li>
+                    ) 
                 }
-            }>
-            <h1>Profile Settings</h1>
-            <br/>
+                </ol>
+            </div>
+        }
 
-            {
-                state.showErrors === true && 
-                <div className="error-messages alert alert-danger">
-                    <ol>
-                    { 
-                        state.errors.map(
-                            (error) =>
-                                <li>
-                                    {error}
-                                </li>
-                        ) 
+
+        {
+            globalState.profile &&
+            <div
+                style={
+                    {
+                        backgroundImage: `url(${globalState.profile.photoUrl})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover',
+                        width: '180px',
+                        height: '180px',
+                        margin: '0 auto',
+                        display: 'block',
+                        borderRadius: '100%'
+                    }}
+                />
+        }
+
+
+        <label>Enter your firstname *</label>
+        <input 
+        defaultValue={globalState.profile && globalState.profile.firstName}
+        ref={(elem) => firstNameField = elem}
+        className="field form-control" name="firstName" type="text" />
+
+        <label>Enter your lastname *</label>
+        <input 
+        defaultValue={globalState.profile && globalState.profile.lastName}
+        ref={(elem) => lastNameField = elem}
+        className="field form-control" name="lastName" type="text" />
+
+        <label>Enter your email *</label>
+        <input 
+        defaultValue={globalState.profile && globalState.profile.email}
+        ref={(elem) => emailField = elem}
+        className="field form-control" name="email" type="text" />
+
+        <label>Enter a password *</label>
+        <input 
+        ref={(elem) => passwordField = elem}
+        className="field form-control" name="password" 
+        autocomplete="off" type="password" />
+
+        <label>Enter your phone (optional)</label>
+        <input 
+        defaultValue={globalState.profile && globalState.profile.phone}
+        ref={(elem) => phoneField = elem}
+        className="field form-control" name="phone" type="text" />
+
+        <br/><br/>
+
+        <label>Upload your profile picture</label>
+        <input 
+        onChange={attachFile}
+        className="field form-control" id="photo" name="file" 
+        type="file" multiple="multiple"/>
+
+        <input 
+        ref={ (elem)=> photoURLField = elem}
+        defaultValue={globalState.profile && globalState.profile.photoURL}
+        className="field form-control" type="hidden"/>
+
+        <br/><br/>
+
+        {
+            !state.loading &&
+            <button 
+                className="btn btn-primary"
+                onClick={updateUser}
+                style={
+                    {
+                        padding: "10px", 
+                        fontSize: "16px"
                     }
-                    </ol>
-                </div>
-            }
+                }>
+                    Update
+            </button>
+        }
 
-            <label>Enter your firstname *</label>
-            <input 
-            defaultValue={globalState.profile && globalState.profile.firstName}
-            ref={(elem) => firstNameField = elem}
-            className="field form-control" name="firstName" type="text" />
+        {
+            state.loading &&
+            <div>Loading...</div>
+        }
 
-            <label>Enter your lastname *</label>
-            <input 
-            defaultValue={globalState.profile && globalState.profile.lastName}
-            ref={(elem) => lastNameField = elem}
-            className="field form-control" name="lastName" type="text" />
-
-            <label>Enter your email *</label>
-            <input 
-            defaultValue={globalState.profile && globalState.profile.email}
-            ref={(elem) => emailField = elem}
-            className="field form-control" name="email" type="text" />
-
-            <label>Enter a password *</label>
-            <input 
-            ref={(elem) => passwordField = elem}
-            className="field form-control" name="password" 
-            autocomplete="off" type="password" />
-
-            <label>Enter your phone (optional)</label>
-            <input 
-            defaultValue={globalState.profile && globalState.profile.phone}
-            ref={(elem) => phoneField = elem}
-            className="field form-control" name="phone" type="text" />
-
-            <br/><br/>
-
-            <label>Upload your profile picture</label>
-            <input 
-            onChange={attachFile}
-            className="field form-control" id="photo" name="file" 
-            type="file" multiple="multiple"/>
-
-            <br/><br/>
-
-            {
-                !state.loading && !state.registeredSuccess &&
-                <button 
-                    className="btn btn-primary"
-                    onClick={registerUser}
-                    style={
-                        {
-                            padding: "10px", 
-                            fontSize: "16px"
-                        }
-                    }>
-                        Register
-                </button>
-            }
-
-            {
-                state.loading &&
-                <div>Loading...</div>
-            }
-            
-        </div>
-        )
-    }
+        {
+            state.updateSuccess === true &&
+            <div className="alert alert-success">Update successful!</div>
+        }
+        
+    </div>
+    )
 }
 
 export default ProfileScreen;
